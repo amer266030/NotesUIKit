@@ -14,8 +14,6 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
-        self.tableView.estimatedRowHeight = 48
-        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.backgroundColor = .clear
         
         registerCells()

@@ -9,6 +9,9 @@ import UIKit
 
 class HomeVC: UIViewController {
     var vm = HomeVM()
+    private var drawerView: DrawerView!
+    private let drawerWidth: CGFloat = UIScreen.main.bounds.width / 2
+    private var overlayView: UIView!
 
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -55,10 +58,11 @@ class HomeVC: UIViewController {
         configureNavbarButton()
         configureHeaderLabel()
         configureTableView()
+        configureDrawer()
     }
     
     func configureNavbarButton() {
-        navlLeadingButton = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal"), style: .plain, target: self, action: #selector(vm.editButtonTapped))
+        navlLeadingButton = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal"), style: .plain, target: self, action: #selector(toggleDrawer))
         navlLeadingButton.tintColor = UIColor.text
         self.navigationItem.leftBarButtonItem = navlLeadingButton
     }
@@ -69,8 +73,49 @@ class HomeVC: UIViewController {
         headerLabel.font = UIFont(descriptor: descriptor!, size: preferredFont.pointSize)
     }
     
-    
+    private func navigateToAnotherView() {
+        hideDrawer()
+        let newViewController = AddNoteVC()
+        newViewController.title = "Add Note"
 
+        navigationController?.pushViewController(newViewController, animated: true)
+    }
+    
+    private func configureDrawer() {
+        overlayView = UIView(frame: view.bounds)
+//        overlayView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        overlayView.isHidden = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideDrawer))
+        overlayView.addGestureRecognizer(tapGesture)
+        view.addSubview(overlayView)
+        
+        drawerView = DrawerView(frame: CGRect(x: -drawerWidth, y: 0, width: drawerWidth, height: view.bounds.height))
+        drawerView.callBack = { [weak self] in
+            self?.navigateToAnotherView()
+        }
+        view.addSubview(drawerView)
+    }
+    
+    @objc private func toggleDrawer() {
+        vm.showDrawer.toggle()
+
+        UIView.animate(withDuration: 0.3) {
+            self.drawerView.frame.origin.x = self.vm.showDrawer ? 0 : -self.drawerWidth
+            self.overlayView.isHidden = !self.vm.showDrawer
+            self.overlayView.alpha = self.vm.showDrawer ? 1 : 0
+        }
+    }
+    
+    @objc private func hideDrawer() {
+        vm.showDrawer = false
+
+        UIView.animate(withDuration: 0.3, animations: {
+            self.drawerView.frame.origin.x = -self.drawerWidth
+            self.overlayView.alpha = 0
+        }) { _ in
+            self.overlayView.isHidden = true
+        }
+    }
 
     /*
     // MARK: - Navigation

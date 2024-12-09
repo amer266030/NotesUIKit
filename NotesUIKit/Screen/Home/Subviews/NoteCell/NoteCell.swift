@@ -20,7 +20,6 @@ class NoteCell: UITableViewCell {
     @IBOutlet weak var backView: UIView!
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,18 +27,16 @@ class NoteCell: UITableViewCell {
     }
     
     func configureLayout() {
+        backView.translatesAutoresizingMaskIntoConstraints = true
+        imgView.translatesAutoresizingMaskIntoConstraints = true
         backView.cornerRadius()
     }
     
     func setupCell(vm: NoteCellVM) {
         let img = UIImage(systemName: vm.note.category.img)
-        let configuration = UIImage.SymbolConfiguration(pointSize: 12, weight: .medium)
-        imageView?.image = img?.applyingSymbolConfiguration(configuration)
-        
-//        print(vm.note.title)
+        imageView?.image = img
         
         titleLabel.text = vm.note.title
-        titleLabel.textColor = UIColor.red
-        dateLabel.text = vm.note.updatedAt.formatted(date: .abbreviated, time: .shortened)
+//        dateLabel.text = vm.note.updatedAt.formatted(date: .abbreviated, time: .shortened)
     }
 }

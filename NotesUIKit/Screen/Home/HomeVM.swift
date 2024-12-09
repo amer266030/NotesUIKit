@@ -34,7 +34,7 @@ class HomeVM {
     
     // MARK: - Button Functions
     
-    @objc func editButtonTapped() {
+    func drawerButtonTapped() {
         print("Edit button tapped")
     }
     
