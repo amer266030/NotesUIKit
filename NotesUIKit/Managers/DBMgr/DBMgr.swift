@@ -27,7 +27,7 @@ class DBMgr {
                 appropriateFor: nil,
                 create: true
             )
-            let dbPath = documentsURL.appendingPathComponent("notes.sqlite3").path
+            let dbPath = documentsURL.appendingPathComponent("notesTable.sqlite3").path
             connection = try Connection(dbPath)
         } catch {
             throw DBError.connection

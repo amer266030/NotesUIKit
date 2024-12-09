@@ -5,11 +5,15 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeVC" customModule="NotesUIKit" customModuleProvider="target">
             <connections>
+                <outlet property="activityIndicator" destination="YnD-EZ-t9C" id="OcG-0Q-rhs"/>
+                <outlet property="headerLabel" destination="9Lb-gn-T3I" id="KSY-Oz-Fik"/>
+                <outlet property="tableView" destination="l2e-tc-liL" id="EP7-lF-IWQ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -18,28 +22,54 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Lb-gn-T3I">
-                    <rect key="frame" x="177" y="415.66666666666669" width="39" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Notes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Lb-gn-T3I">
+                    <rect key="frame" x="16" y="75" width="77" height="21.666666666666671"/>
+                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
                     <color key="textColor" name="text"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="l2e-tc-liL">
+                    <rect key="frame" x="24" y="112.66666666666669" width="345" height="721.33333333333326"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="YnD-EZ-t9C">
+                    <rect key="frame" x="178" y="407.66666666666669" width="37" height="37"/>
+                    <color key="color" name="AccentColor"/>
+                </activityIndicatorView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="background"/>
             <constraints>
-                <constraint firstItem="9Lb-gn-T3I" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Eml-c8-4lP"/>
-                <constraint firstItem="9Lb-gn-T3I" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="FGw-b8-FN0"/>
+                <constraint firstItem="l2e-tc-liL" firstAttribute="top" secondItem="9Lb-gn-T3I" secondAttribute="bottom" constant="16" id="6Iz-eV-eJu"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="l2e-tc-liL" secondAttribute="trailing" constant="24" id="EdP-jq-WJa"/>
+                <constraint firstItem="9Lb-gn-T3I" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="K6T-AF-0Zr"/>
+                <constraint firstItem="YnD-EZ-t9C" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="LNJ-na-wkY"/>
+                <constraint firstItem="YnD-EZ-t9C" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="Uqg-Ay-szH"/>
+                <constraint firstItem="l2e-tc-liL" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="XK5-K8-EmU"/>
+                <constraint firstItem="9Lb-gn-T3I" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="bev-VE-gZ9"/>
+                <constraint firstItem="l2e-tc-liL" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" constant="16" id="rY1-WY-kQq"/>
             </constraints>
-            <point key="canvasLocation" x="94" y="20"/>
+            <point key="canvasLocation" x="93.89312977099236" y="19.718309859154932"/>
         </view>
+        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="EiC-An-4qR">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <point key="canvasLocation" x="124" y="-627"/>
+        </tableView>
     </objects>
     <resources>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="background">
-            <color red="0.99999994039535522" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.99607843137254903" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="text">
             <color red="0.13333333333333333" green="0.12941176470588237" blue="0.12549019607843137" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
