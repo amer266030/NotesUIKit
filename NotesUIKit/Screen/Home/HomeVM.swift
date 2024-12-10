@@ -13,6 +13,9 @@ class HomeVM {
     var notes: Observable<[Note]> = Observable([])
     var showDrawer = false
     var isLoading: Observable<Bool> = Observable(false)
+    var showAlert: Observable<Bool> = Observable(false)
+    var alertTitle: String = "Error"
+    var alertMsg: String = ""
     
     var filteredNotes: [(NoteCategory, [Note])] {
         Dictionary(grouping: notes.value!, by: { $0.category })
@@ -20,22 +23,41 @@ class HomeVM {
             .sorted { $0.0.sortPriority < $1.0.sortPriority }
     }
     
-    // MARK: - Data Functions
+    // MARK: - DB Functions
+    
+    func initializeApp() async {
+        do {
+            isLoading.value = true
+            try await DBMgr.shared.connectToDB()
+            isLoading.value = false
+        } catch let error {
+            isLoading.value = false
+            alertMsg = error.localizedDescription
+            showAlert.value = true
+        }
+    }
     
     func fetchNotes() {
         isLoading.value = true
-        notes.value = MockData.shared.notes
-        isLoading.value = false
+        do {
+            notes.value = try dbMgr.notesTable.fetch()
+            isLoading.value = false
+        } catch let error {
+            alertMsg = error.localizedDescription
+            showAlert.value = true
+        }
     }
     
-//    func filterNotesByCategory(_ category: NoteCategory) -> [Note] {
-//        notes.value!.filter({$0.category == category})
-//    }
-    
-    // MARK: - Button Functions
-    
-    func drawerButtonTapped() {
-        print("Edit button tapped")
+    func delete(_ note: Note) {
+        isLoading.value = true
+        do {
+            try dbMgr.notesTable.delete(note)
+            isLoading.value = false
+        } catch let error {
+            alertMsg = error.localizedDescription
+            isLoading.value = false
+            showAlert.value = true
+        }
     }
     
     // MARK: - Table Functions

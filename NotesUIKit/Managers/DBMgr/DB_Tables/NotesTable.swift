@@ -53,7 +53,10 @@ class NotesTable {
                     notes.append(note)
                 }
             }
-        } catch {
+        } catch let error {
+            #if DEBUG
+            print("In fetch notes: \(error.localizedDescription)")
+            #endif
             throw DBError.tableOperationError
         }
         return notes

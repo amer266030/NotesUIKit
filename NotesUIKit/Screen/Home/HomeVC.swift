@@ -21,6 +21,10 @@ class HomeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Task {
+            await vm.initializeApp()
+            vm.fetchNotes()
+        }
 
         configureViewLayout()
         bindViewModel()
@@ -32,6 +36,11 @@ class HomeVC: UIViewController {
     }
     
     func bindViewModel() {
+        vm.notes.bind { [weak self] notes in
+            guard let self = self else { return }
+            self.reloadTableView()
+        }
+        
         vm.isLoading.bind { [weak self] isLoading in
             guard let self = self else { return }
             guard let isLoading = isLoading else { return }
@@ -45,9 +54,25 @@ class HomeVC: UIViewController {
             }
         }
         
-        vm.notes.bind { [weak self] notes in
+        vm.showAlert.bind { [weak self] showAlert in
             guard let self = self else { return }
-            self.reloadTableView()
+            guard let showAlert = showAlert else { return }
+            
+            DispatchQueue.main.async {
+                if showAlert {
+                    let alertTitle = self.vm.alertTitle
+                    let alertMsg = self.vm.alertMsg
+                    
+                    let alertController = UIAlertController(title: alertTitle, message: alertMsg, preferredStyle: .alert)
+                    
+                    alertController.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                        self.vm.showAlert.value = false
+                    })
+                    self.present(alertController, animated: true, completion: nil)
+                } else {
+                    self.vm.showAlert.value = false
+                }
+            }
         }
     }
 
@@ -73,17 +98,17 @@ class HomeVC: UIViewController {
         headerLabel.font = UIFont(descriptor: descriptor!, size: preferredFont.pointSize)
     }
     
-    private func navigateToAnotherView() {
+    private func navigateToAddNote() {
         hideDrawer()
-        let newViewController = AddNoteVC()
-        newViewController.title = "Add Note"
-
-        navigationController?.pushViewController(newViewController, animated: true)
+        let addNoteVC = AddNoteVC()
+        addNoteVC.title = "Add Note"
+        addNoteVC.configureView(vm: AddNoteVM())
+        navigationController?.pushViewController(addNoteVC, animated: true)
     }
     
     private func configureDrawer() {
         overlayView = UIView(frame: view.bounds)
-//        overlayView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        overlayView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         overlayView.isHidden = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideDrawer))
         overlayView.addGestureRecognizer(tapGesture)
@@ -91,7 +116,7 @@ class HomeVC: UIViewController {
         
         drawerView = DrawerView(frame: CGRect(x: -drawerWidth, y: 0, width: drawerWidth, height: view.bounds.height))
         drawerView.callBack = { [weak self] in
-            self?.navigateToAnotherView()
+            self?.navigateToAddNote()
         }
         view.addSubview(drawerView)
     }
@@ -116,15 +141,5 @@ class HomeVC: UIViewController {
             self.overlayView.isHidden = true
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

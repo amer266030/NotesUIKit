@@ -7,8 +7,8 @@
 
 import UIKit
 
-extension UIScreen {
+extension UIViewController {
     func dismissKeyboard() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        view.endEditing(true)
     }
 }

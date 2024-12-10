@@ -29,7 +29,10 @@ class DBMgr {
             )
             let dbPath = documentsURL.appendingPathComponent("notesTable.sqlite3").path
             connection = try Connection(dbPath)
-        } catch {
+        } catch let error {
+#if DEBUG
+            print("DBMgr Connection: \(error.localizedDescription)")
+#endif
             throw DBError.connection
         }
     }

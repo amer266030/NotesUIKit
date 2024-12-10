@@ -3,6 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -10,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddNoteVC" customModule="NotesUIKit" customModuleProvider="target">
             <connections>
+                <outlet property="activityIndicator" destination="thQ-Bg-o2D" id="eHq-MS-Nwb"/>
                 <outlet property="bodyTextView" destination="4TP-nC-5RR" id="Fom-2J-fyP"/>
                 <outlet property="createBtnView" destination="q3c-Ra-Y4W" id="GOh-bf-0Ie"/>
                 <outlet property="createdAtLabel" destination="vqk-Sd-7nt" id="Iry-tt-nip"/>
@@ -142,12 +144,18 @@
                     <viewLayoutGuide key="contentLayoutGuide" id="BoP-IP-Caf"/>
                     <viewLayoutGuide key="frameLayoutGuide" id="Srh-kB-Wlo"/>
                 </scrollView>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="thQ-Bg-o2D">
+                    <rect key="frame" x="178" y="407.66666666666669" width="37" height="37"/>
+                    <color key="color" name="AccentColor"/>
+                </activityIndicatorView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="K3Y-JJ-E4c" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="367-jq-99U"/>
+                <constraint firstItem="thQ-Bg-o2D" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="XV4-qj-Sg8"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="K3Y-JJ-E4c" secondAttribute="trailing" constant="16" id="a8A-SP-LGK"/>
+                <constraint firstItem="thQ-Bg-o2D" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="afF-aF-klj"/>
                 <constraint firstItem="K3Y-JJ-E4c" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="24" id="fGz-lc-2Uu"/>
                 <constraint firstItem="K3Y-JJ-E4c" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" constant="8" id="fhC-xr-vxr"/>
             </constraints>
@@ -155,6 +163,9 @@
         </view>
     </objects>
     <resources>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

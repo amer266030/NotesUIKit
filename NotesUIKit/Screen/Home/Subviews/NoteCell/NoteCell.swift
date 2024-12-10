@@ -20,6 +20,7 @@ class NoteCell: UITableViewCell {
     @IBOutlet weak var backView: UIView!
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -33,10 +34,12 @@ class NoteCell: UITableViewCell {
     }
     
     func setupCell(vm: NoteCellVM) {
-        let img = UIImage(systemName: vm.note.category.img)
+        let configuration = UIImage.SymbolConfiguration(pointSize: 12)
+        let img = UIImage(systemName: vm.note.category.img, withConfiguration: configuration)
         imageView?.image = img
+        imageView?.tintColor = UIColor(vm.note.category.color)
         
         titleLabel.text = vm.note.title
-//        dateLabel.text = vm.note.updatedAt.formatted(date: .abbreviated, time: .shortened)
+        dateLabel.text = vm.note.updatedAt.formatted(date: .abbreviated, time: .shortened)
     }
 }

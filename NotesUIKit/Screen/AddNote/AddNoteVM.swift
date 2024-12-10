@@ -13,8 +13,11 @@ class AddNoteVM {
     var isUpdate = false
     var serverTime: ServerTime?
     var isLoading: Observable<Bool> = Observable(false)
+    var showAlert: Observable<Bool> = Observable(false)
+    var alertTitle: String = "Error"
+    var alertMsg: String = ""
     
-    init(_ note: Note?) {
+    init(_ note: Note? = nil) {
         if let note {
             self.note = note
             isUpdate = true
@@ -29,6 +32,12 @@ class AddNoteVM {
         return date
     }
     
+    func updateNoteAttributes(title: String, body: String, category: NoteCategory) {
+        note.title = title
+        note.body = body
+        note.category = category
+    }
+    
     func saveNote() async -> Bool {
         isLoading.value = true
         do {
@@ -37,7 +46,6 @@ class AddNoteVM {
             guard let date = try await fetchTime() else { throw NetworkError.invalidResponse }
             note.updatedAt = date
             if isUpdate {
-                
                 try dbMgr.notesTable.update(note)
             } else {
                 note.createdAt = date
@@ -47,10 +55,11 @@ class AddNoteVM {
             return true
         } catch let error {
             isLoading.value = false
+            alertMsg = error.localizedDescription
+            showAlert.value = true
             return false
         }
     }
-    
     
     func validateNote() throws {
         if note.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {

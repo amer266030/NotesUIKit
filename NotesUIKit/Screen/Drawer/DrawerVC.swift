@@ -10,7 +10,7 @@ import UIKit
 class DrawerView: UIView {
     private let navigateButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Navigate", for: .normal)
+        button.setTitle("Add Note", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .systemBlue
